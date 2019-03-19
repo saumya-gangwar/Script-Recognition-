@@ -95,6 +95,24 @@
         // var dataURL = canvas.toDataURL();
         // document.getElementById("canvasimg").src = dataURL;
         // document.getElementById("canvasimg").style.display = "inline";
+        
+        $.ajax({
+             type: "POST",
+             url: "http://127.0.0.1/sendImage", //I have doubt about this url, not sure if something specific must come before "/take_pic"
+             data: dataURL,
+            success: function(data) {
+      if (data.success) {
+        alert('Your file was successfully uploaded!');
+      } else {
+        alert('There was an error uploading your file!');
+      }
+    },
+    error: function(data) {
+      alert('There was an error uploading your file!');
+    }
+  }).done(function() {
+    console.log("Sent");
+  });
     }
     
     function findxy(res, e) {
@@ -129,7 +147,7 @@
     }
     </script>
     <body onload="init()">
-        <form action="http://localhost:5000/sendImage" method = "post">
+        
         <canvas id="can" width="200" height="200" style="position:absolute;top:10%;left:10%;border:2px solid;"></canvas>
         <div style="position:absolute;top:12%;left:43%;">Choose Color</div>
         <div style="position:absolute;top:15%;left:45%;width:10px;height:10px;background:green;" id="green" onclick="color(this)"></div>
@@ -142,8 +160,7 @@
         <div style="position:absolute;top:22%;left:45%;width:15px;height:15px;background:white;border:2px solid;" id="white" onclick="color(this)"></div>
         <img id="canvasimg" name="word" style="position:absolute;top:10%;left:52%;" style="display:none;">
         
-        <input type="submit" value="segment" id="btn" size="30" style="position:absolute;top:55%;left:10%;">
-        </form>
+        <input type="button" value="segment" id="btn" size="30" onclick="save()" onclistyle="position:absolute;top:55%;left:10%;">
         <input type="button" value="clear" id="clr" size="23" onclick="erase()" style="position:absolute;top:55%;left:15%;">
     </body>
     </html>
